@@ -2,17 +2,17 @@
 
 require 'Slim/Slim.php';
 
-$weathers = array(
-	array("id"=>1,"city"=>"Sofia"),
-	array("id"=>2, "city"=>"Plovdiv")
-);
-
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
 
 $app->config('debug', true);
 $app->config('templates.path', './views');
+
+
+$app->get('/', 'Index');
+
+// RESTfull
 
 $app->get('/weathers', 'getWeathers');
 $app->get('/weathers/:id', 'getWeather');
@@ -21,13 +21,16 @@ $app->delete('/weathers/:id', 'delWeather');
 $app->put('/weathers/:id', 'updateWeather');
 
 
-$app->get('/', function() use($app) {
+$app->run();
+
+
+function Index() {
+	$app = \Slim\Slim::getInstance();
+
 	$app->render('header.php');
 	$app->render('index.php');
-	$app->render('footer.php');
-});
-
-$app->run();
+	$app->render('footer.php');	
+}
 
 function throwJSONError($error_message) {
 	echo '{"error":{"text": '.$error_message.'}}';
