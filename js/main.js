@@ -1,4 +1,5 @@
 
+var App;
 
 $(function() {
     MyWeatherapp.boot($('#weather-app'));
@@ -57,6 +58,7 @@ MyWeatherapp.Index.Form = Backbone.View.extend({
 	className: 'form-inline',
 	template: template('index-form'),
 	events: {
+		"click .btn-options": "opts" ,
 		"submit": "submit"
 	},
 
@@ -71,6 +73,11 @@ MyWeatherapp.Index.Form = Backbone.View.extend({
 			city: this.$('input#city').val()
 		});
 
+	},
+	opts: function(event) {
+		event.preventDefault();
+
+		App.navigate("options",true);
 	}
 });
 
@@ -118,16 +125,37 @@ MyWeatherapp.Index.Weather = Backbone.View.extend({
 	}
 });
 
+MyWeatherapp.Opts = Backbone.View.extend({
+	template: template('options'),
+	events: {
+		"click .btn-save": "save"
+	},
+	render: function(){
+		this.$el.html(this.template(this));
+		return this;
+	},
+	save: function() {
+		console.log('Saving Options');
+		App.navigate('', true);
+	}
+});
+
 
 MyWeatherapp.Router = Backbone.Router.extend({
 	initialize: function(options){
 		this.el = options.el;
 	},
 	routes: {
-		"": "index"
+		"" : "index",
+		"options": "opts"
 	},
 	index: function(){
 		var view = new MyWeatherapp.Index();
+		this.el.empty();
+		this.el.append(view.render().el);
+	},
+	opts: function() {
+		var view = new MyWeatherapp.Opts();
 		this.el.empty();
 		this.el.append(view.render().el);
 	}
@@ -136,7 +164,7 @@ MyWeatherapp.Router = Backbone.Router.extend({
 
 MyWeatherapp.boot = function(container) {
 	container = $(container);
-	var router = new MyWeatherapp.Router({el:container});
+	App = new MyWeatherapp.Router({el:container});
 	Backbone.history.start();
 }	
 

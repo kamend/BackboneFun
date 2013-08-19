@@ -9,10 +9,14 @@
 		</div>
 	</div>
 
+	<script type="text/x-handlebars-template" id="options-template">
+	
+			<button class="btn btn-primary btn-save">Save Options</button>
+	
+	</script>
 
 	
 	<script type="text/x-handlebars-template" id="index-template">
-		
 		<div class="cities">
 		</div>
 	</script>
@@ -30,14 +34,16 @@
 			<button class="btn btn-primary btn-mini btn-edit">Edit</button>
 			<button class="btn btn-danger btn-mini btn-delete">Remove</button>
 		</span>
-		
+
 	</script>
 
 	<script type="text/x-handlebars-template" id="index-form-template">
 			<div class="input-append">
 				<input type="text" class="input-medium" id="city">
 				<button type="submit" class="btn "><i class="icon-ok"></i> Add City</button>
+
 			</div>
+			<button class="btn btn-mini btn-options pull-right"><i class="icon-pencil"></i> Options</button>
 	</script>
 
 </div>
